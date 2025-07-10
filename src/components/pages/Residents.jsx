@@ -5,14 +5,16 @@ import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import ApperIcon from "@/components/ApperIcon";
 import PaymentForm from "@/components/organisms/PaymentForm";
+import DocumentUpload from "@/components/organisms/DocumentUpload";
 import { useResidents } from "@/hooks/useResidents";
 import { toast } from "react-toastify";
 
 const Residents = () => {
   const { residents, loading, error, refetch, processPayment } = useResidents();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+const [statusFilter, setStatusFilter] = useState("all");
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
   const [selectedResident, setSelectedResident] = useState(null);
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -53,9 +55,25 @@ const handleViewProfile = (resident) => {
 
   const handlePaymentCancel = () => {
     setShowPaymentForm(false);
-    setSelectedResident(null);
+setSelectedResident(null);
   };
 
+  const handleUploadDocuments = () => {
+    setShowDocumentUpload(true);
+  };
+
+  const handleDocumentUploadClose = () => {
+    setShowDocumentUpload(false);
+  };
+
+  const handleDocumentUploadSuccess = (uploadedFiles) => {
+    toast.success(`Successfully uploaded ${uploadedFiles.length} document(s)`);
+    setShowDocumentUpload(false);
+  };
+
+  const handleDocumentUploadError = (error) => {
+    toast.error(error.message || "Document upload failed");
+  };
   // Filter residents based on search and status
   const filteredResidents = residents.filter(resident => {
     const matchesSearch = resident.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -79,11 +97,17 @@ const handleViewProfile = (resident) => {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Residents</h1>
           <p className="text-gray-600 mt-1">Manage current and past residents</p>
+</div>
+        <div className="flex gap-3">
+          <Button variant="secondary" onClick={handleUploadDocuments}>
+            <ApperIcon name="Upload" className="w-4 h-4 mr-2" />
+            Upload Documents
+          </Button>
+          <Button variant="primary" onClick={handleAddResident}>
+            <ApperIcon name="UserPlus" className="w-4 h-4 mr-2" />
+            Add Resident
+          </Button>
         </div>
-        <Button variant="primary" onClick={handleAddResident}>
-          <ApperIcon name="UserPlus" className="w-4 h-4 mr-2" />
-          Add Resident
-        </Button>
       </div>
 
       {/* Search and Filters */}
@@ -146,6 +170,19 @@ const handleViewProfile = (resident) => {
               resident={selectedResident}
               onPaymentSuccess={handlePaymentSuccess}
               onCancel={handlePaymentCancel}
+            />
+          </div>
+</div>
+      )}
+
+      {/* Document Upload Modal */}
+      {showDocumentUpload && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DocumentUpload
+              onClose={handleDocumentUploadClose}
+              onUploadSuccess={handleDocumentUploadSuccess}
+              onUploadError={handleDocumentUploadError}
             />
           </div>
         </div>
