@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+import ResidentList from "@/components/organisms/ResidentList";
+import SearchBar from "@/components/molecules/SearchBar";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
+import ApperIcon from "@/components/ApperIcon";
+import { useResidents } from "@/hooks/useResidents";
+import { toast } from "react-toastify";
+
+const Residents = () => {
+  const { residents, loading, error, refetch } = useResidents();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleStatusFilter = (status) => {
+    setStatusFilter(status);
+  };
+
+  const handleViewProfile = (resident) => {
+    toast.info(`Viewing profile for ${resident.name}`);
+  };
+
+  const handleCheckOut = (resident) => {
+    toast.success(`Check-out process started for ${resident.name}`);
+  };
+
+  const handleAddResident = () => {
+    toast.info("Opening add resident form");
+  };
+
+  // Filter residents based on search and status
+  const filteredResidents = residents.filter(resident => {
+    const matchesSearch = resident.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         resident.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         resident.phone.includes(searchTerm) ||
+                         resident.roomId.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "all" || resident.paymentStatus === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const statusCounts = {
+    all: residents.length,
+    paid: residents.filter(r => r.paymentStatus === "paid").length,
+    pending: residents.filter(r => r.paymentStatus === "pending").length,
+    overdue: residents.filter(r => r.paymentStatus === "overdue").length
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Residents</h1>
+          <p className="text-gray-600 mt-1">Manage current and past residents</p>
+        </div>
+        <Button variant="primary" onClick={handleAddResident}>
+          <ApperIcon name="UserPlus" className="w-4 h-4 mr-2" />
+          Add Resident
+        </Button>
+      </div>
+
+      {/* Search and Filters */}
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="flex-1 max-w-md">
+          <SearchBar
+            placeholder="Search residents..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            variant={statusFilter === "all" ? "primary" : "ghost"}
+            size="sm"
+            onClick={() => handleStatusFilter("all")}
+          >
+            All ({statusCounts.all})
+          </Button>
+          <Button
+            variant={statusFilter === "paid" ? "success" : "ghost"}
+            size="sm"
+            onClick={() => handleStatusFilter("paid")}
+          >
+            Paid ({statusCounts.paid})
+          </Button>
+          <Button
+            variant={statusFilter === "pending" ? "warning" : "ghost"}
+            size="sm"
+            onClick={() => handleStatusFilter("pending")}
+          >
+            Pending ({statusCounts.pending})
+          </Button>
+          <Button
+            variant={statusFilter === "overdue" ? "error" : "ghost"}
+            size="sm"
+            onClick={() => handleStatusFilter("overdue")}
+          >
+            Overdue ({statusCounts.overdue})
+          </Button>
+        </div>
+      </div>
+
+      {/* Resident List */}
+      <ResidentList
+        residents={filteredResidents}
+        loading={loading}
+        error={error}
+        onRetry={refetch}
+        onViewProfile={handleViewProfile}
+        onCheckOut={handleCheckOut}
+      />
+    </div>
+  );
+};
+
+export default Residents;

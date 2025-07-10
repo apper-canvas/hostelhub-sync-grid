@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "roomNumber": "101",
+    "type": "Dormitory",
+    "capacity": 4,
+    "currentOccupancy": 3,
+    "pricePerBed": 25,
+    "status": "occupied",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 2,
+    "roomNumber": "102",
+    "type": "Dormitory",
+    "capacity": 6,
+    "currentOccupancy": 0,
+    "pricePerBed": 22,
+    "status": "available",
+    "amenities": ["Wi-Fi", "Fan", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 3,
+    "roomNumber": "103",
+    "type": "Private Room",
+    "capacity": 2,
+    "currentOccupancy": 2,
+    "pricePerBed": 45,
+    "status": "occupied",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Private Bathroom", "TV"]
+  },
+  {
+    "Id": 4,
+    "roomNumber": "104",
+    "type": "Dormitory",
+    "capacity": 8,
+    "currentOccupancy": 0,
+    "pricePerBed": 20,
+    "status": "cleaning",
+    "amenities": ["Wi-Fi", "Fan", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 5,
+    "roomNumber": "105",
+    "type": "Private Room",
+    "capacity": 1,
+    "currentOccupancy": 0,
+    "pricePerBed": 55,
+    "status": "available",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Private Bathroom", "TV", "Desk"]
+  },
+  {
+    "Id": 6,
+    "roomNumber": "106",
+    "type": "Dormitory",
+    "capacity": 4,
+    "currentOccupancy": 2,
+    "pricePerBed": 25,
+    "status": "occupied",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 7,
+    "roomNumber": "107",
+    "type": "Dormitory",
+    "capacity": 6,
+    "currentOccupancy": 0,
+    "pricePerBed": 22,
+    "status": "maintenance",
+    "amenities": ["Wi-Fi", "Fan", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 8,
+    "roomNumber": "108",
+    "type": "Private Room",
+    "capacity": 2,
+    "currentOccupancy": 0,
+    "pricePerBed": 45,
+    "status": "available",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Private Bathroom", "TV"]
+  },
+  {
+    "Id": 9,
+    "roomNumber": "201",
+    "type": "Dormitory",
+    "capacity": 8,
+    "currentOccupancy": 6,
+    "pricePerBed": 20,
+    "status": "occupied",
+    "amenities": ["Wi-Fi", "Fan", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 10,
+    "roomNumber": "202",
+    "type": "Dormitory",
+    "capacity": 4,
+    "currentOccupancy": 0,
+    "pricePerBed": 25,
+    "status": "available",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Lockers", "Shared Bathroom"]
+  },
+  {
+    "Id": 11,
+    "roomNumber": "203",
+    "type": "Private Room",
+    "capacity": 2,
+    "currentOccupancy": 1,
+    "pricePerBed": 45,
+    "status": "occupied",
+    "amenities": ["Wi-Fi", "Air Conditioning", "Private Bathroom", "TV"]
+  },
+  {
+    "Id": 12,
+    "roomNumber": "204",
+    "type": "Dormitory",
+    "capacity": 6,
+    "currentOccupancy": 0,
+    "pricePerBed": 22,
+    "status": "available",
+    "amenities": ["Wi-Fi", "Fan", "Lockers", "Shared Bathroom"]
+  }
+]
