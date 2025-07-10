@@ -23,10 +23,17 @@ export const useRooms = () => {
     loadRooms();
   }, []);
 
+const getMaintenanceNotifications = () => {
+    return rooms.filter(room => 
+      room.status === 'maintenance' || room.status === 'cleaning'
+    );
+  };
+
   return {
     rooms,
     loading,
     error,
-    refetch: loadRooms
+    refetch: loadRooms,
+    getMaintenanceNotifications
   };
 };

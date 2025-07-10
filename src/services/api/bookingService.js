@@ -71,7 +71,23 @@ export const bookingService = {
     await delay(200);
     const today = new Date().toISOString().split("T")[0];
     return bookings.filter(booking => 
-      booking.checkOutDate === today && booking.status === "confirmed"
+booking.checkOutDate === today && booking.status === "confirmed"
+    );
+  },
+
+  async getNotificationAlerts() {
+    await delay(200);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const todayStr = today.toISOString().split('T')[0];
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    return bookings.filter(booking => 
+      (booking.checkInDate === todayStr || booking.checkInDate === tomorrowStr ||
+       booking.checkOutDate === todayStr || booking.checkOutDate === tomorrowStr) &&
+      booking.status === 'confirmed'
     );
   }
 };

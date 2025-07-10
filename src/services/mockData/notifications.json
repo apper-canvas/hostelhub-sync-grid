@@ -1,0 +1,72 @@
+[
+  {
+    "Id": 1,
+    "title": "Check-in Today",
+    "message": "Guest check-in for Room 101 scheduled for today",
+    "type": "check-in",
+    "priority": "high",
+    "isRead": false,
+    "createdAt": "2024-01-15T08:00:00Z",
+    "relatedId": 1
+  },
+  {
+    "Id": 2,
+    "title": "Room Maintenance",
+    "message": "Room 107 requires maintenance - plumbing issue reported",
+    "type": "maintenance",
+    "priority": "medium",
+    "isRead": false,
+    "createdAt": "2024-01-15T09:30:00Z",
+    "relatedId": 7
+  },
+  {
+    "Id": 3,
+    "title": "Check-out Today",
+    "message": "Guest check-out for Room 103 scheduled for today",
+    "type": "check-out",
+    "priority": "high",
+    "isRead": true,
+    "createdAt": "2024-01-15T07:00:00Z",
+    "relatedId": 3
+  },
+  {
+    "Id": 4,
+    "title": "Payment Overdue",
+    "message": "Payment for booking #5 is overdue - Room 103",
+    "type": "payment",
+    "priority": "high",
+    "isRead": false,
+    "createdAt": "2024-01-14T14:15:00Z",
+    "relatedId": 5
+  },
+  {
+    "Id": 5,
+    "title": "Room Cleaning",
+    "message": "Room 104 is ready for cleaning after guest checkout",
+    "type": "maintenance",
+    "priority": "low",
+    "isRead": true,
+    "createdAt": "2024-01-14T16:45:00Z",
+    "relatedId": 4
+  },
+  {
+    "Id": 6,
+    "title": "System Update",
+    "message": "Booking system will be updated tonight at 2 AM",
+    "type": "system",
+    "priority": "medium",
+    "isRead": false,
+    "createdAt": "2024-01-14T11:20:00Z",
+    "relatedId": null
+  },
+  {
+    "Id": 7,
+    "title": "New Booking",
+    "message": "New booking received for Room 105 - pending confirmation",
+    "type": "check-in",
+    "priority": "medium",
+    "isRead": true,
+    "createdAt": "2024-01-13T18:30:00Z",
+    "relatedId": 7
+  }
+]

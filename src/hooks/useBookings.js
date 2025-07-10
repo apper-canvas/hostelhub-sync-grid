@@ -23,10 +23,34 @@ export const useBookings = () => {
     loadBookings();
   }, []);
 
+const getCheckInNotifications = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return bookings.filter(booking => {
+      const checkInDate = new Date(booking.checkInDate);
+      return checkInDate <= tomorrow && checkInDate >= today && booking.status === 'confirmed';
+    });
+  };
+
+  const getCheckOutNotifications = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return bookings.filter(booking => {
+      const checkOutDate = new Date(booking.checkOutDate);
+      return checkOutDate <= tomorrow && checkOutDate >= today && booking.status === 'confirmed';
+    });
+  };
+
   return {
     bookings,
     loading,
     error,
-    refetch: loadBookings
+    refetch: loadBookings,
+    getCheckInNotifications,
+    getCheckOutNotifications
   };
 };

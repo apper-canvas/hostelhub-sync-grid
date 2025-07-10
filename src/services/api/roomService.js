@@ -62,7 +62,14 @@ export const roomService = {
     if (index === -1) {
       throw new Error("Room not found");
     }
-    rooms[index].status = status;
+rooms[index].status = status;
     return { ...rooms[index] };
+  },
+
+  async getMaintenanceAlerts() {
+    await delay(200);
+    return rooms.filter(room => 
+      room.status === 'maintenance' || room.status === 'cleaning'
+    );
   }
 };

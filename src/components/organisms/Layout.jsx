@@ -3,10 +3,11 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "@/components/organisms/Sidebar";
 import Header from "@/components/organisms/Header";
 import { cn } from "@/utils/cn";
+import { useNotifications } from "@/hooks/useNotifications";
 
 const Layout = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const { notifications, loading: notificationsLoading, markAsRead } = useNotifications();
   return (
     <div className={cn("min-h-screen bg-background", className)}>
       <Sidebar 
@@ -14,13 +15,15 @@ const Layout = ({ className }) => {
         onClose={() => setSidebarOpen(false)} 
       />
       
-      <div className="lg:ml-64">
+<div className="lg:ml-64">
         <Header 
           title="HostelHub"
           subtitle="Manage your hostel operations efficiently"
           onMenuClick={() => setSidebarOpen(true)}
+          notifications={notifications}
+          notificationsLoading={notificationsLoading}
+          onMarkAsRead={markAsRead}
         />
-        
         <main className="p-6">
           <Outlet />
         </main>
