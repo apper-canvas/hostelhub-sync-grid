@@ -4,14 +4,16 @@ import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import ApperIcon from "@/components/ApperIcon";
+import PaymentForm from "@/components/organisms/PaymentForm";
 import { useResidents } from "@/hooks/useResidents";
 import { toast } from "react-toastify";
 
 const Residents = () => {
-  const { residents, loading, error, refetch } = useResidents();
+  const { residents, loading, error, refetch, processPayment } = useResidents();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [selectedResident, setSelectedResident] = useState(null);
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -20,7 +22,7 @@ const Residents = () => {
     setStatusFilter(status);
   };
 
-  const handleViewProfile = (resident) => {
+const handleViewProfile = (resident) => {
     toast.info(`Viewing profile for ${resident.name}`);
   };
 
@@ -30,6 +32,28 @@ const Residents = () => {
 
   const handleAddResident = () => {
     toast.info("Opening add resident form");
+  };
+
+  const handlePayFees = (resident) => {
+    setSelectedResident(resident);
+    setShowPaymentForm(true);
+  };
+
+  const handlePaymentSuccess = async (paymentData) => {
+    try {
+      await processPayment(paymentData);
+      toast.success(`Payment of $${paymentData.amount} processed successfully for ${selectedResident.name}`);
+      setShowPaymentForm(false);
+      setSelectedResident(null);
+      refetch();
+    } catch (error) {
+      toast.error(error.message || "Payment processing failed");
+    }
+  };
+
+  const handlePaymentCancel = () => {
+    setShowPaymentForm(false);
+    setSelectedResident(null);
   };
 
   // Filter residents based on search and status
@@ -103,7 +127,7 @@ const Residents = () => {
         </div>
       </div>
 
-      {/* Resident List */}
+{/* Resident List */}
       <ResidentList
         residents={filteredResidents}
         loading={loading}
@@ -111,7 +135,21 @@ const Residents = () => {
         onRetry={refetch}
         onViewProfile={handleViewProfile}
         onCheckOut={handleCheckOut}
+        onPayFees={handlePayFees}
       />
+
+      {/* Payment Form Modal */}
+      {showPaymentForm && selectedResident && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <PaymentForm
+              resident={selectedResident}
+              onPaymentSuccess={handlePaymentSuccess}
+              onCancel={handlePaymentCancel}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

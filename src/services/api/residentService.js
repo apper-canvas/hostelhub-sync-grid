@@ -71,5 +71,41 @@ export const residentService = {
     }
     residents[index].checkOutDate = new Date().toISOString().split("T")[0];
     return { ...residents[index] };
+},
+
+  async updatePaymentStatus(id, status) {
+    await delay(250);
+    const index = residents.findIndex(r => r.Id === parseInt(id));
+    if (index === -1) {
+      throw new Error("Resident not found");
+    }
+    
+    const validStatuses = ["paid", "pending", "overdue"];
+    if (!validStatuses.includes(status)) {
+      throw new Error("Invalid payment status");
+    }
+    
+    residents[index].paymentStatus = status;
+    residents[index].lastPaymentDate = new Date().toISOString();
+    
+    return { ...residents[index] };
+  },
+
+  async getPaymentHistory(id) {
+    await delay(200);
+    const resident = residents.find(r => r.Id === parseInt(id));
+    if (!resident) {
+      throw new Error("Resident not found");
+    }
+    
+    // This would typically fetch from payment service
+    // For now, return mock payment history
+    return {
+      residentId: resident.Id,
+      residentName: resident.name,
+      currentStatus: resident.paymentStatus,
+      lastPaymentDate: resident.lastPaymentDate || null,
+      paymentHistory: []
+    };
   }
 };

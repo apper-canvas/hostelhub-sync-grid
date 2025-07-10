@@ -12,6 +12,7 @@ const ResidentList = ({
   onRetry, 
   onViewProfile, 
   onCheckOut, 
+  onPayFees,
   className 
 }) => {
   if (loading) {
@@ -42,12 +43,13 @@ const ResidentList = ({
 
   return (
     <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", className)}>
-      {residents.map((resident) => (
+{residents.map((resident) => (
         <ResidentCard
           key={resident.Id}
           resident={resident}
           onViewProfile={onViewProfile}
           onCheckOut={onCheckOut}
+          onPayFees={onPayFees}
         />
       ))}
     </div>
